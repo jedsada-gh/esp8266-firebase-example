@@ -49,6 +49,6 @@ void loop() {
   valueObject["humidity"] = (String) h;
 
   //push|set data to real-time db
-  Firebase.set(deviceName + "/value", valueObject);
+  Firebase.push(deviceName + "/value", valueObject);
   delay(2000);
 }
