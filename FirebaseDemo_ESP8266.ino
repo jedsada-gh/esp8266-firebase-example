@@ -10,7 +10,7 @@
 #define DHTTYPE DHT11 //type sensor 
 DHT dht(DHTPIN, DHTTYPE); //init value
 
-const String deviceNumber = "EspressoLiteV2";
+const String deviceName = "EspressoLiteV2";
 
 void setup() {
   Serial.begin(115200);
@@ -27,7 +27,7 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-  Firebase.setString(deviceNumber + "/macAddress", WiFi.macAddress());
+  Firebase.setString(deviceName + "/macAddress", WiFi.macAddress());
 }
 
 void loop() {
@@ -48,7 +48,7 @@ void loop() {
   valueObject["temperature"] = (String) t;
   valueObject["humidity"] = (String) h;
 
-  //push data to real-time db
-  Firebase.push(deviceNumber + "/value", valueObject);
+  //push|set data to real-time db
+  Firebase.set(deviceName + "/value", valueObject);
   delay(2000);
 }
