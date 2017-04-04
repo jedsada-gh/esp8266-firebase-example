@@ -27,7 +27,6 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-  Firebase.setString(deviceName + "/macAddress", WiFi.macAddress());
 }
 
 void loop() {
@@ -47,8 +46,9 @@ void loop() {
   JsonObject& valueObject = jsonBuffer.createObject();
   valueObject["temperature"] = (String) t;
   valueObject["humidity"] = (String) h;
+  valueObject["macAddress"] = (String) WiFi.macAddress();
 
   //push|set data to real-time db
-  Firebase.push(deviceName + "/value", valueObject);
+  Firebase.set(deviceName + "/value", valueObject);
   delay(2000);
 }
